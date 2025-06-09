@@ -67,6 +67,13 @@ function Basic() {
                 Sign in
               </MDButton>
             </MDBox>
+            <MDBox textAlign="center" mt={2}>
+              <MDTypography variant="button" color="text">
+                <Link to="/authentication/forgot-password" style={{ color: "#1e88e5" }}>
+                  Şifremi unuttum
+                </Link>
+              </MDTypography>
+            </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}

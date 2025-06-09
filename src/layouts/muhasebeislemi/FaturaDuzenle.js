@@ -7,6 +7,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDBox from "components/MDBox";
 import addNotification from "../notifications/addNotification";
+import { generateExcelBlob } from "../../utils/exportInvoice";
 
 const FaturaDuzenle = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const FaturaDuzenle = () => {
     kdv: "",
     not: "",
   });
-
+  const [excelUrl, setExcelUrl] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
@@ -93,7 +94,9 @@ const FaturaDuzenle = () => {
     try {
       if (isEditMode && formData.id) {
         await updateDoc(doc(db, "invoices", formData.id), yeniFatura);
-
+        const blob = generateExcelBlob(yeniFatura);
+        const url = URL.createObjectURL(blob);
+        setExcelUrl(url);
         const user = auth.currentUser;
         if (user) {
           await addNotification(user.displayName || user.email, "info", "Fatura güncellendi");

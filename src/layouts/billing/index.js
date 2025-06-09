@@ -12,6 +12,7 @@ import { MenuItem, Select, FormControl, InputLabel, Grid, Card, Typography } fro
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import addNotification from "../notifications/addNotification";
+import { generateExcelBlob } from "../../utils/exportInvoice";
 
 function Billing() {
   const [faturaTipi, setFaturaTipi] = useState("Giden Faturalar");
@@ -215,7 +216,22 @@ function Billing() {
                 >
                   <IconButton
                     color="primary"
-                    onClick={() => window.open("/ornek-fatura.png", "_blank")}
+                    onClick={() => {
+                      try {
+                        const blob = generateExcelBlob(item);
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement("a");
+                        link.href = url;
+                        link.download = `${item.belgeNo || "fatura"}.xlsx`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url); 
+                      } catch (err) {
+                        console.error("Excel dosyası oluşturulamadı:", err);
+                        alert("Excel dosyası oluşturulurken bir hata oluştu.");
+                      }
+                    }}
                   >
                     <VisibilityIcon />
                   </IconButton>

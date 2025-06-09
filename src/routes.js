@@ -11,6 +11,7 @@ import React from "react";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import ProtectedRoute from "components/ProtectedRoute";
+import ForgotPassword from "layouts/authentication/ForgotPassword";
 
 const routes = [
   {
@@ -52,6 +53,13 @@ const routes = [
   {
     route: "/authentication/sign-up",
     component: <SignUp />,
+  },
+  {
+    type: "route",
+    name: "Forgot Password",
+    key: "forgot-password",
+    route: "/authentication/forgot-password",
+    component: <ForgotPassword />,
   },
   {
     type: "collapse",

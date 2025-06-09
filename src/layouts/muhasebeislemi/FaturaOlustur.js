@@ -7,10 +7,11 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDBox from "components/MDBox";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db, auth } from "../../firebase";
+import { generateExcelBlob } from "../../utils/exportInvoice";
 
 const FaturaOlustur = () => {
   const navigate = useNavigate();
-
+  const [excelUrl, setExcelUrl] = useState(null);
   const [aktifMukellefler, setAktifMukellefler] = useState([]);
   const [formData, setFormData] = useState({
     ad: "",
@@ -102,6 +103,9 @@ const FaturaOlustur = () => {
 
     try {
       await addDoc(collection(db, "invoices"), yeniFatura);
+      const blob = generateExcelBlob(yeniFatura);
+      const url = URL.createObjectURL(blob);
+      setExcelUrl(url);
       const user = auth.currentUser;
       if (user) {
         await addNotification(user.displayName || user.email, "success", "Fatura oluşturuldu");
