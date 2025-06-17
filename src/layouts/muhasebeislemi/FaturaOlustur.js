@@ -351,7 +351,11 @@ const FaturaOlustur = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Button fullWidth variant="contained" color="primary" onClick={handleSubmit}>
+                  <Button fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    sx={{ color: "#ffffff" }}>
                     Fatura Oluştur
                   </Button>
                 </Grid>
